@@ -33,12 +33,17 @@ document.addEventListener("DOMContentLoaded", () => {
             ${
               details.participants.length > 0
                 ? `<ul class="participants-list">
-                    ${details.participants
-                      .map(
-                        (participant) =>
-                          `<li class="participant-item">${participant}</li>`
-                      )
-                      .join("")}
+                    ${(() => {
+                      const ul = document.createElement("ul");
+                      ul.className = "participants-list";
+                      details.participants.forEach((participant) => {
+                        const li = document.createElement("li");
+                        li.className = "participant-item";
+                        li.textContent = participant;
+                        ul.appendChild(li);
+                      });
+                      return ul.outerHTML;
+                    })()}
                   </ul>`
                 : `<p class="no-participants">No participants yet.</p>`
             }
